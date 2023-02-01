@@ -218,20 +218,20 @@
     <enum name="MAV_FRAME">
       <description>Co-ordinate frames used by MAVLink. Not all frames are supported by all commands, messages, or vehicles.
       
-        Global frames use the following naming conventions:
-        - "GLOBAL": Global co-ordinate frame with WGS84 latitude/longitude and altitude positive over mean sea level (MSL) by default. 
-          The following modifiers may be used with "GLOBAL":
-          - "RELATIVE_ALT": Altitude is relative to the vehicle home position rather than MSL.
-          - "TERRAIN_ALT": Altitude is relative to ground level rather than MSL.
-          - "INT": Latitude/longitude (in degrees) are scaled by multiplying by 1E7.
+      Global frames use the following naming conventions:
+      - "GLOBAL": Global co-ordinate frame with WGS84 latitude/longitude and altitude positive over mean sea level (MSL) by default. 
+        The following modifiers may be used with "GLOBAL":
+        - "RELATIVE_ALT": Altitude is relative to the vehicle home position rather than MSL.
+        - "TERRAIN_ALT": Altitude is relative to ground level rather than MSL.
+        - "INT": Latitude/longitude (in degrees) are scaled by multiplying by 1E7.
 
-        Local frames use the following naming conventions:
-        - "LOCAL": Origin of local frame is fixed relative to earth. Unless otherwise specified this origin is the origin of the vehicle position-estimator ("EKF").
-        - "BODY": Origin of local frame travels with the vehicle. NOTE, "BODY" does NOT indicate alignment of frame axis with vehicle attitude.
-        - "OFFSET": Deprecated synonym for "BODY" (origin travels with the vehicle). Not to be used for new frames.
+      Local frames use the following naming conventions:
+      - "LOCAL": Origin of local frame is fixed relative to earth. Unless otherwise specified this origin is the origin of the vehicle position-estimator ("EKF").
+      - "BODY": Origin of local frame travels with the vehicle. NOTE, "BODY" does NOT indicate alignment of frame axis with vehicle attitude.
+      - "OFFSET": Deprecated synonym for "BODY" (origin travels with the vehicle). Not to be used for new frames.
 
-        Some deprecated frames do not follow these conventions (e.g. MAV_FRAME_BODY_NED and MAV_FRAME_BODY_OFFSET_NED).
-      </description>
+      Some deprecated frames do not follow these conventions (e.g. MAV_FRAME_BODY_NED and MAV_FRAME_BODY_OFFSET_NED).
+ </description>
       <entry value="0" name="MAV_FRAME_GLOBAL">
         <description>Global (WGS84) coordinate frame + MSL altitude. First value / x: latitude, second value / y: longitude, third value / z: positive altitude over mean sea level (MSL).</description>
       </entry>
@@ -1012,17 +1012,14 @@
         <param index="7">Empty</param>
       </entry>
       <entry value="189" name="MAV_CMD_DO_LAND_START" hasLocation="true" isDestination="false">
-        <description>Mission command to perform a landing. This is used as a marker in a mission to tell the autopilot where a sequence of mission items that represents a landing starts.
-	  It may also be sent via a COMMAND_LONG to trigger a landing, in which case the nearest (geographically) landing sequence in the mission will be used.
-	  The Latitude/Longitude/Altitude is optional, and may be set to 0 if not needed. If specified then it will be used to help find the closest landing sequence.
-	</description>
+        <description>Mission command to perform a landing. This is used as a marker in a mission to tell the autopilot where a sequence of mission items that represents a landing starts. It may also be sent via a COMMAND_LONG to trigger a landing, in which case the nearest (geographically) landing sequence in the mission will be used. The Latitude/Longitude is optional, and may be set to 0 if not needed. If specified then it will be used to help find the closest landing sequence.</description>
         <param index="1">Empty</param>
         <param index="2">Empty</param>
         <param index="3">Empty</param>
         <param index="4">Empty</param>
         <param index="5" label="Latitude">Latitude</param>
         <param index="6" label="Longitude">Longitude</param>
-        <param index="7" label="Altitude" units="m">Altitude</param>
+        <param index="7">Empty</param>
       </entry>
       <entry value="190" name="MAV_CMD_DO_RALLY_LAND" hasLocation="false" isDestination="false">
         <description>Mission command to perform a landing from a rally point.</description>
@@ -3386,9 +3383,6 @@
       <entry value="3" name="MAV_ODID_STATUS_EMERGENCY">
         <description>The UA is having an emergency.</description>
       </entry>
-      <entry value="4" name="MAV_ODID_STATUS_REMOTE_ID_SYSTEM_FAILURE">
-        <description>The remote ID system is failing or unreliable in some way.</description>
-      </entry>
     </enum>
     <enum name="MAV_ODID_HEIGHT_REF">
       <entry value="0" name="MAV_ODID_HEIGHT_REF_OVER_TAKEOFF">
@@ -3625,10 +3619,10 @@
       </entry>
     </enum>
     <enum name="MAV_ODID_ARM_STATUS">
-      <entry value="0" name="MAV_ODID_ARM_STATUS_GOOD_TO_ARM">
+      <entry value="0" name="MAV_ODID_GOOD_TO_ARM">
         <description>Passing arming checks.</description>
       </entry>
-      <entry value="1" name="MAV_ODID_ARM_STATUS_PRE_ARM_FAIL_GENERIC">
+      <entry value="1" name="MAV_ODID_PRE_ARM_FAIL_GENERIC">
         <description>Generic arming failure, see error string for details.</description>
       </entry>
     </enum>
@@ -5252,7 +5246,6 @@
       <field type="float" name="pt_compensation">Pressure/temperature compensation</field>
       <extensions/>
       <field type="float" name="ignition_voltage" units="V">Supply voltage to EFI sparking system.  Zero in this value means "unknown", so if the supply voltage really is zero volts use 0.0001 instead.</field>
-      <field type="float" name="fuel_pressure" units="kPa">Fuel pressure. Zero in this value means "unknown", so if the fuel pressure really is zero kPa use 0.0001 instead.</field>
     </message>
     <!-- MESSAGE IDs 180 - 229: Space for custom messages in individual projectname_messages.xml files -->
     <message id="230" name="ESTIMATOR_STATUS">
@@ -5711,6 +5704,7 @@
       <field type="char[64]" name="password">Password. Blank for an open AP. MD5 hash when message is sent back as a response.</field>
     </message>
     <message id="301" name="AIS_VESSEL">
+      <wip/>
       <!-- This message is work-in-progress and it can therefore change. It should NOT be used in stable production environments. -->
       <description>The location and information of an AIS vessel</description>
       <field type="uint32_t" name="MMSI">Mobile Marine Service Identifier, 9 decimal digits</field>
